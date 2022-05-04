@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const port = process.env.PORT || 5000;
 require('dotenv').config();
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
 
 
 // middleware
@@ -16,6 +18,9 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log('listening to', port);
 });
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.mjof2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run () {
     try {
