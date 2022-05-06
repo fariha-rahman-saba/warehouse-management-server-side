@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const port = process.env.PORT || 4000;
 
@@ -53,16 +53,20 @@ async function run () {
             res.send(items);
         });
 
-        // app.post("/add-items", async (req, res) => {
-        //     const item = req.body;
-        //     const result = await itemCollection.insertOne(item);
-        //     res.send({ success: 'product added' });
-        // });
+        app.post("/add-items", async (req, res) => {
+            const item = req.body;
+            const result = await itemCollection.insertOne(item);
+            console.log("item added");
+            res.send({ success: 'product added' });
+        });
 
-        // app.get('/manage-inventory', async (req, res) => {
-        //     const items = await itemCollection.find({}).toArray();
-        //     req.send(items);
-        // });
+        app.get('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const item = await itemCollection.findOne(query);
+            // req.send(item);
+            res.send({ success: 'product added' });
+        });
 
         // app.get('/my-items', async (req, res) => {
         //     const userItems = await userItemsCollection.find({ email }).toArray();
