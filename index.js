@@ -64,6 +64,7 @@ async function run () {
             res.send({ success: 'product added' });
         });
 
+        // request for fetching one single item
         app.get("/items/:id", async (req, res) => {
             const itemId = req.params.id;
             const query = { _id: ObjectId(itemId) };
@@ -71,13 +72,29 @@ async function run () {
             res.send(item);
         });
 
-        // // request for delete an item
-        // app.delete('/items/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: ObjectId(id) };
-        //     const result = await itemCollection.deleteOne(query);
-        //     res.send(result);
-        // });
+        // Update stock quantity
+        app.put('/items/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedItem = req.body;
+            // console.log(updatedItem);
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    quantity: updatedItem.quantity
+                }
+            };
+            const result = await itemCollection.updateOne(filter, updatedDoc, options);
+            res.send(result);
+        });
+
+        // request for delete an item
+        app.delete('/items/:id', async (req, res) => {
+            const itemId = req.params.id;
+            const query = { _id: ObjectId(itemId) };
+            const result = await itemCollection.deleteOne(query);
+            res.send(result);
+        });
 
         // app.get('/my-items', async (req, res) => {
         //     const userItems = await userItemsCollection.find({ email }).toArray();
