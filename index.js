@@ -2,8 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
-const port = process.env.PORT || 4000;
+// const jwt = require('jsonwebtoken');
 
+
+const port = process.env.PORT || 4000;
 const app = express();
 
 // middleware
@@ -20,7 +22,7 @@ app.listen(port, () => {
 });
 
 const uri = `mongodb+srv://${process.env.DB_USER2}:${process.env.DB_PASSWORD2}@cluster0.jewnr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-console.log(uri);
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
@@ -46,6 +48,7 @@ async function run () {
         // const userItemsCollection = client.db("bookMania").collection("userItems");
         // console.log(itemCollection);
 
+        // request for getting all the inventory items
         app.get("/items", async (req, res) => {
             const query = {};
             const cursor = itemCollection.find(query);
@@ -53,6 +56,7 @@ async function run () {
             res.send(items);
         });
 
+        // request for adding a new item in the inventory
         app.post("/add-items", async (req, res) => {
             const item = req.body;
             const result = await itemCollection.insertOne(item);
@@ -60,13 +64,22 @@ async function run () {
             res.send({ success: 'product added' });
         });
 
-        app.get('/inventory/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const item = await itemCollection.findOne(query);
-            // req.send(item);
-            res.send({ success: 'product added' });
-        });
+        // app.get("/items/:id", async (req, res) => {
+        //     const id = req.params.id;
+        //     console.log(id);
+        //     const query = { _id: ObjectId(id) };
+        //     const item = await itemCollection.findOne(query);
+        //     res.send(item);
+        //     console.log("item searching");
+        // });
+
+        // // request for delete an item
+        // app.delete('items/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) };
+        //     const result = await itemCollection.deleteOne(query);
+        //     res.send(result);
+        // });
 
         // app.get('/my-items', async (req, res) => {
         //     const userItems = await userItemsCollection.find({ email }).toArray();
