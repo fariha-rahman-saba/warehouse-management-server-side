@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId, ObjectID } = require('mongodb');
 require('dotenv').config();
 // const jwt = require('jsonwebtoken');
 
@@ -64,17 +64,15 @@ async function run () {
             res.send({ success: 'product added' });
         });
 
-        // app.get("/items/:id", async (req, res) => {
-        //     const id = req.params.id;
-        //     console.log(id);
-        //     const query = { _id: ObjectId(id) };
-        //     const item = await itemCollection.findOne(query);
-        //     res.send(item);
-        //     console.log("item searching");
-        // });
+        app.get("/items/:id", async (req, res) => {
+            const itemId = req.params.id;
+            const query = { _id: ObjectId(itemId) };
+            const item = await itemCollection.findOne(query);
+            res.send(item);
+        });
 
         // // request for delete an item
-        // app.delete('items/:id', async (req, res) => {
+        // app.delete('/items/:id', async (req, res) => {
         //     const id = req.params.id;
         //     const query = { _id: ObjectId(id) };
         //     const result = await itemCollection.deleteOne(query);
