@@ -96,9 +96,15 @@ async function run () {
             res.send(result);
         });
 
-        // app.get('/my-items', async (req, res) => {
-        //     const userItems = await userItemsCollection.find({ email }).toArray();
-        //     req.send(userItems);
+        //    fetch user items
+        // app.get('/user-items', async (req, res) => {
+        //     // const email = req.params.email;
+        //     // console.log(email);
+        //     const query = { email: user.email };
+
+        //     const cursor = itemCollection.find(query);
+        //     const items = await cursor.toArray();
+        //     res.send(items);
         // });
     }
     finally {
