@@ -21,23 +21,12 @@ app.listen(port, () => {
     console.log('listening to', port);
 });
 
+// function verifyToken(token)
+
 const uri = `mongodb+srv://${process.env.DB_USER2}:${process.env.DB_PASSWORD2}@cluster0.jewnr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-
-// async function run () {
-//     try {
-//         await client.connect();
-//         const itemCollection = client.db('bookMania').collection('items');
-//         console.log("database connected");
-//     }
-//     finally {
-
-//     }
-// }
-
-// run().catch(console.dir);
 
 async function run () {
     try {
@@ -97,15 +86,14 @@ async function run () {
         });
 
         //    fetch user items
-        // app.get('/user-items', async (req, res) => {
-        //     // const email = req.params.email;
-        //     // console.log(email);
-        //     const query = { email: user.email };
-
-        //     const cursor = itemCollection.find(query);
-        //     const items = await cursor.toArray();
-        //     res.send(items);
-        // });
+        app.get("/user-items", async (req, res) => {
+            const email = req.query.email;
+            console.log(email);
+            const query = { email: email };
+            const cursor = itemCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items);
+        });
     }
     finally {
 
