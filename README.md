@@ -1,13 +1,9 @@
 # Book Mania Website
-### live website link: 
+### live website link: https://book-inventory-568ec.web.app/
+#### This is the code server of the server side of our book inventory website
 ***
 ## Technologies:
 A list of technologies used within the project:
-* [HTML]: Version 5
-* [CSS]: Version 3
-* [JavaScript]: Version ES6
-* [React]: Version 18.0.0
-* [React-Router]
 * [node.js]
 * [express.js]
 * [mongodb]
