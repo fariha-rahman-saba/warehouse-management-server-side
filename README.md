@@ -7,7 +7,6 @@ A list of technologies used within the project:
 * [node.js]
 * [express.js]
 * [mongodb]
-* [Firebase]
 * [Heroku]
 ***
 ## Details:
